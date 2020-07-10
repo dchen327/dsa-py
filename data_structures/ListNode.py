@@ -43,6 +43,19 @@ class LinkedList:
             yield node
             node = node.next_node
 
+    def __getitem__(self, key):
+        for i, node in enumerate(self):
+            if i == key:
+                return node
+        raise Exception('Key out of range')
+
+    def __setitem__(self, key, value):
+        for i, node in enumerate(self):
+            if i == key:
+                node.val = value
+                return
+        raise Exception('Key out of range')
+
     def add_first(self, node):
         node.next_node = self.head
         self.head = node
@@ -67,6 +80,8 @@ class LinkedList:
                 new_node.next_node = node
                 return
             prev_node = node
+    
+        raise Exception(f'Node with val {target_node_val} not found')
 
     def add_after(self, target_node_val, new_node):
         if not self.head:
@@ -100,11 +115,14 @@ class LinkedList:
 
 
 if __name__ == '__main__':
-    llist = LinkedList([1, 3, 3])
-    llist.add_first(ListNode(2))
-    llist.add_last(ListNode(5))
-    llist.add_after(1, ListNode(7))
-    llist.add_before(7, ListNode(6))
-    llist.remove_node(1)
-    print(llist)
-
+    llist = LinkedList([1, 2, 3])
+    llist.add_first(ListNode('hi'))
+    llist.add_last(ListNode(5.5))
+    print(llist)  # hi->1->2->3->5.5->None
+    llist.add_after(1, ListNode('after 1'))
+    llist.add_before(5.5, ListNode('before 5.5'))
+    print(llist)  # hi->1->after 1->2->3->5.5->None
+    llist.remove_node(3)
+    llist[0] = 'hello'
+    print(llist[2])  # after 1
+    print(llist)  # hello->1->after 1->2->before 5.5->5.5->None
