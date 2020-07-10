@@ -56,6 +56,9 @@ class LinkedList:
                 return
         raise Exception('Key out of range')
 
+    def __len__(self):
+        return sum(1 for _ in self)
+
     def add_first(self, node):
         node.next_node = self.head
         self.head = node
@@ -126,3 +129,4 @@ if __name__ == '__main__':
     llist[0] = 'hello'
     print(llist[2])  # after 1
     print(llist)  # hello->1->after 1->2->before 5.5->5.5->None
+    print(len(llist))
